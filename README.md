@@ -1,3 +1,3 @@
 # Vulnserver exploits
 
-Some PoCs for basic techniques of Windows exploitation againsta vulnserver application. 
+Some PoCs for basic techniques of Windows exploitation against vulnserver application. 
