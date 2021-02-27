@@ -1,1 +1,1 @@
-# vulnserver exercises
+# Vulnserver exploits
